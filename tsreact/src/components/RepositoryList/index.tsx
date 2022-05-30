@@ -1,27 +1,25 @@
 import React, {Component} from "react";
 
-interface Repository{
-    id: number,
-    name: string
-}
+import { ApplicationState } from "../../store";
+import { connect } from "react-redux";
 
-interface Props{
-    repositories: Repository[]
-}
 
-export default class RepositoryList extends Component<Props>{
-    state = {
-        newRepository: '',
-    }
-    
+export default class RepositoryList extends Component{
+
+    componentDidMount(){};
+
     render(){
-        const {repositories} = this.props;
-
+ 
         return(
             <ul>
-                {repositories.map(repository => <li>{repository.name</li>)}
+              
             </ul>
 
         );
     }
 }
+
+const mapStateToProps = (state:ApplicationState) => ({
+});
+
+export default connect(mapStateToProps)(RepositoryList);
