@@ -3,16 +3,36 @@ import React, {Component} from "react";
 import { ApplicationState } from "../../store";
 import { connect } from "react-redux";
 
+import {Repository} from '../../store/ducks/repositories/types';
+import * as RepositoriesActions from '../../store/ducks/repositories/actions';
+import { bindActionCreators, Dispatch } from "redux";
 
-export default class RepositoryList extends Component{
+interface StateProps{
+    repositories: Repository[];
+}
 
-    componentDidMount(){};
+interface DispatchProps{
+    loadRequest(): void;
+
+}
+
+interface OwnProps{
+
+}
+
+type Props = StateProps & DispatchProps & OwnProps
+
+class RepositoryList extends Component<Props>{
+    componentDidMount() {
+        const {loadRequest} = this.props;
+        loadRequest();
+    };
 
     render(){
- 
+        const { repositories } = this.props;
         return(
             <ul>
-              
+                {repositories.map(repository => repository.name)}
             </ul>
 
         );
@@ -20,6 +40,10 @@ export default class RepositoryList extends Component{
 }
 
 const mapStateToProps = (state:ApplicationState) => ({
+    repositories: state.repositories.data
 });
 
-export default connect(mapStateToProps)(RepositoryList);
+const mapDispatchToProps = (dispatch: Dispatch) => 
+    bindActionCreators(RepositoriesActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps )(RepositoryList);
